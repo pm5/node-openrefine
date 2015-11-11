@@ -1,0 +1,158 @@
+[
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column 場址地號 using expression grel:replace(value, cells[\"縣市別\"].value, '')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "場址地號",
+    "expression": "grel:replace(value, cells[\"縣市別\"].value, '')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column 場址地號 using expression grel:replace(value, /.*(鄉|巿|區|里)/, '')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "場址地號",
+    "expression": "grel:replace(value, /.*(鄉|巿|區|里)/, '')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column 場址地號 using expression grel:replace(value, /\\(.*/, '')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "場址地號",
+    "expression": "grel:replace(value, /\\(.*/, '')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column 場址地號 using expression grel:replace(value, /(地號|、|;|號).*/, '')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "場址地號",
+    "expression": "grel:replace(value, /(地號|、|;|號).*/, '')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column 號 at index 5 based on column 場址地號 using expression grel:replace(value, /.*段/, '')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "號",
+    "columnInsertIndex": 5,
+    "baseColumnName": "場址地號",
+    "expression": "grel:replace(value, /.*段/, '')",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column 場址地號 using expression grel:replace(value, /.*(鄉|鎮|巿)/, '')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "場址地號",
+    "expression": "grel:replace(value, /.*(鄉|鎮|巿)/, '')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column 場址地號 using expression grel:replace(value, /.*巿/, '')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "場址地號",
+    "expression": "grel:replace(value, /.*巿/, '')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column 場址地號 using expression grel:replace(value, /.*巿/, '')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "場址地號",
+    "expression": "grel:replace(value, /.*巿/, '')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column 場址地號 using expression grel:replace(value, /.*市/, '')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "場址地號",
+    "expression": "grel:replace(value, /.*市/, '')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column 場址地號 using expression grel:replace(value, cells[\"號\"].value, '')",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "場址地號",
+    "expression": "grel:replace(value, cells[\"號\"].value, '')",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column GeoJSON at index 8 based on column 場址面積(平方公尺) using expression grel:''",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "GeoJSON",
+    "columnInsertIndex": 8,
+    "baseColumnName": "場址面積(平方公尺)",
+    "expression": "grel:''",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column WKT at index 9 based on column GeoJSON using expression grel:value",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "newColumnName": "WKT",
+    "columnInsertIndex": 9,
+    "baseColumnName": "GeoJSON",
+    "expression": "grel:value",
+    "onError": "set-to-blank"
+  }
+]

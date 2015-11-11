@@ -1,0 +1,28 @@
+{
+  "name": "node-open-refine",
+  "version": "0.0.1",
+  "description": "node-open-refine ===============",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pm5/node-open-refine.git"
+  },
+  "keywords": [
+    "openrefine"
+  ],
+  "author": "Pomin Wu <pomin5@gmail.com> (https://github.com/pm5)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pm5/node-open-refine/issues"
+  },
+  "homepage": "https://github.com/pm5/node-open-refine#readme",
+  "dependencies": {
+    "superagent": "^1.4.0"
+  },
+  "devDependencies": {
+    "debug": "^2.2.0"
+  }
+}
