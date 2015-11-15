@@ -56,3 +56,8 @@ Project metadata format :
   }
 }
 ```
+
+See also
+--------
+
+* [Refine API](https://github.com/maxogden/refine-python/wiki/Refine-API) and implementations [in Python](https://github.com/maxogden/refine-python/) and [in Ruby](https://github.com/maxogden/refine-ruby).
