@@ -1,6 +1,6 @@
 {
   "name": "open-refine",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "OpenRefine client in Node.js",
   "main": "index.js",
   "scripts": {
