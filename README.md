@@ -16,7 +16,7 @@ Usage
 -----
 
 ```
-import {OpenRefine} from 'open-refine'
+import {OpenRefine} from 'openrefine'
 
 var server = OpenRefine()
 // set API endpoint
