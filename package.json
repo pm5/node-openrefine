@@ -1,17 +1,18 @@
 {
   "name": "node-open-refine",
   "version": "0.0.1",
-  "description": "node-open-refine ===============",
+  "description": "OpenRefine client in Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "DEBUG=open-refine mocha"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pm5/node-open-refine.git"
   },
   "keywords": [
-    "openrefine"
+    "openrefine",
+    "googlerefine"
   ],
   "author": "Pomin Wu <pomin5@gmail.com> (https://github.com/pm5)",
   "license": "MIT",
@@ -20,9 +21,11 @@
   },
   "homepage": "https://github.com/pm5/node-open-refine#readme",
   "dependencies": {
+    "debug": "^2.2.0",
     "superagent": "^1.4.0"
   },
   "devDependencies": {
-    "debug": "^2.2.0"
+    "chai": "^3.4.1",
+    "mocha": "^2.3.3"
   }
 }
