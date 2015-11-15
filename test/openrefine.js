@@ -3,6 +3,8 @@ var expect = require('chai').expect
 var OpenRefine = require('../').OpenRefine
 
 describe('OpenRefine API', function () {
+  this.timeout(10000)
+
   it('can get projects metadata', done => {
     var server = OpenRefine()
     server.projects_metadata()
@@ -53,7 +55,18 @@ describe('OpenRefine API', function () {
       .upload('test/test.csv')
       .apply('test/op.json')
       .download('csv', 'output.csv')
-      .then(done)
+      .then(() => done())
+      .catch(done)
+  })
+
+  it('can delete projects', done => {
+    var server = OpenRefine()
+    server.project('my_awesome_data_cleanup_project')
+      .upload('test/test.csv')
+      .then(r => {
+        server.delete(r.project_id)
+        done()
+      })
       .catch(done)
   })
 })
