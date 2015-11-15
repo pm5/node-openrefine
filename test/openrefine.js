@@ -26,15 +26,24 @@ describe('OpenRefine API', function () {
     var server = OpenRefine()
     server.project('my_awesome_data_cleanup_project')
       .upload('test/test.csv')
-      .then(result => {
-        if (!result.project_id) {
+      .then(r => {
+        if (!r.project_id) {
           return done('no project ID returned.')
         }
-        if (typeof result.project_id !== 'number') {
-          return done('project ID ' + result.project_id + ' is not a number.')
+        if (typeof r.project_id !== 'number' || r.project_id <= 0) {
+          return done('invalid project ID ' + r.project_id + '.')
         }
         done()
       })
+      .catch(done)
+  })
+
+  it('can apply operations to project', done => {
+    var server = OpenRefine()
+    server.project('my_awesome_data_cleanup_project')
+      .upload('test/test.csv')
+      .apply('test/op.json')
+      .then(() => done())
       .catch(done)
   })
 })

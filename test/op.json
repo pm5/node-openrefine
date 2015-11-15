@@ -1,0 +1,17 @@
+[
+  {
+    "op": "core/column-split",
+    "description": "Split column 日期 by separator",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "日期",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "-",
+    "regex": false,
+    "maxColumns": 0
+  }
+]
