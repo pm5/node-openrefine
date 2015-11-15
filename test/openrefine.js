@@ -46,4 +46,14 @@ describe('OpenRefine API', function () {
       .then(() => done())
       .catch(done)
   })
+
+  it('can download data from project', done => {
+    var server = OpenRefine()
+    server.project('my_awesome_data_cleanup_project')
+      .upload('test/test.csv')
+      .apply('test/op.json')
+      .download('csv', 'output.csv')
+      .then(done)
+      .catch(done)
+  })
 })
