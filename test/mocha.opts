@@ -1,2 +1,2 @@
 --ui bdd
---reporter dot
+--reporter min
