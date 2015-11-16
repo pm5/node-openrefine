@@ -7,7 +7,7 @@ Node.js client library for controlling OpenRefine.
 Features
 --------
 
-* [x] upload, apply operations, download results
+* [x] upload, apply operations, download results, delete project
 * [ ] import from and export to buffer
 * [ ] pipe
 * [ ] CLI tool
@@ -29,16 +29,14 @@ server.project('my_awesome_data_cleanup_project')
   .upload('upload.csv')
   .apply('operations.json')
   .download('csv', 'output.csv')
-  .then(r => {
-    server.delete(r.project_id)
-    done()
-  })
+  .delete()
+  .then(...)
 
 // load existing project by numeric project id
 server.project()
   .id(project_id)
   .download('csv', 'output.csv')
-  .then(done)
+  .then(...)
 ```
 
 Project metadata format :
