@@ -33,8 +33,7 @@ server.project('my_awesome_data_cleanup_project')
   .then(...)
 
 // load existing project by numeric project id
-server.project()
-  .id(project_id)
+server.load(1234567890)
   .download('csv', 'output.csv')
   .then(...)
 ```

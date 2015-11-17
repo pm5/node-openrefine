@@ -70,6 +70,21 @@ describe('OpenRefine', () => {
       )
     })
 
+    describe('load projects', () => {
+      var id
+      before(() =>
+        OpenRefine()
+          .project(test_project_name)
+          .upload('test/test.csv')
+      )
+
+      it('should load projects by id', () =>
+        OpenRefine()
+          .load(id)
+          .apply('test/op.json')
+      )
+    })
+
     describe('apply operations', () => {
       it('should apply operations to project', () =>
         OpenRefine()
