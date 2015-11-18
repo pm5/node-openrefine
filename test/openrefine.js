@@ -115,12 +115,12 @@ describe('OpenRefine', () => {
       )
     })
 
-    describe('delete project', () => {
-      it('should delete projects', () =>
+    describe('destroy project', () => {
+      it('should destroy projects', () =>
         OpenRefine()
           .create(test_project_name)
           .upload('test/test.csv')
-          .delete()
+          .destroy()
       )
     })
   })
