@@ -25,11 +25,37 @@ describe('OpenRefine', () => {
       })
     })
 
+    describe('create projects', () => {
+      it('should create projects by name', () => {
+        OpenRefine()
+          .create(test_project_name)
+          .then(r => {
+            expect(r.project_id).to.be.defined
+          })
+      })
+    })
+
+    describe('load projects', () => {
+      var id
+      before(() =>
+        OpenRefine()
+          .create(test_project_name)
+          .upload('test/test.csv')
+          .then(r => id = r.project_id)
+      )
+
+      it('should load projects by id', () =>
+        OpenRefine()
+          .load(id)
+          .apply('test/op.json')
+      )
+    })
+
     describe('delete projects', () => {
       var id
       before(() =>
         OpenRefine()
-          .project(test_project_name)
+          .create(test_project_name)
           .upload('test/test.csv')
           .then(r => id = r.project_id)
       )
@@ -60,7 +86,7 @@ describe('OpenRefine', () => {
     describe('upload data', () => {
       it('should create project by uploading data', () =>
         OpenRefine()
-          .project(test_project_name)
+          .create(test_project_name)
           .upload('test/test.csv')
           .then(r => {
             expect(r.project_id).to.be.defined
@@ -70,25 +96,10 @@ describe('OpenRefine', () => {
       )
     })
 
-    describe('load projects', () => {
-      var id
-      before(() =>
-        OpenRefine()
-          .project(test_project_name)
-          .upload('test/test.csv')
-      )
-
-      it('should load projects by id', () =>
-        OpenRefine()
-          .load(id)
-          .apply('test/op.json')
-      )
-    })
-
     describe('apply operations', () => {
       it('should apply operations to project', () =>
         OpenRefine()
-          .project(test_project_name)
+          .create(test_project_name)
           .upload('test/test.csv')
           .apply('test/op.json')
       )
@@ -97,7 +108,7 @@ describe('OpenRefine', () => {
     describe('download data', () => {
       it('should download data from project', () =>
         OpenRefine()
-          .project(test_project_name)
+          .create(test_project_name)
           .upload('test/test.csv')
           .apply('test/op.json')
           .download('csv', 'output.csv')
@@ -107,7 +118,7 @@ describe('OpenRefine', () => {
     describe('delete project', () => {
       it('should delete projects', () =>
         OpenRefine()
-          .project(test_project_name)
+          .create(test_project_name)
           .upload('test/test.csv')
           .delete()
       )
