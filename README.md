@@ -29,7 +29,7 @@ server.project('my_awesome_data_cleanup_project')
   .upload('upload.csv')
   .apply('operations.json')
   .download('csv', 'output.csv')
-  .delete()
+  .destroy()
   .then(...)
 
 // load existing project by numeric project id
