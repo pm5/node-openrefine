@@ -3,6 +3,7 @@
 var expect = require('chai').expect
 var OpenRefine = require('../').OpenRefine
 var fs = require('fs')
+var csv = require('csv')
 
 describe('OpenRefine', () => {
   var test_project_name = 'my_awesome_data_cleanup_project_dont_use_this_name_for_your_projects'
@@ -122,14 +123,29 @@ describe('OpenRefine', () => {
       )
     })
 
-    describe('export data to stream', () => {
-      it('should export data', () => {
-        OpenRefine()
+    describe('pipe data', () => {
+      it('should pipe data to stream', () => {
+        var out = OpenRefine()
           .create(test_project_name)
           .upload('test/test.csv')
-          .apply('test/op.json')
-        }
-      )
+          .pipe(csv.parse())
+          .pipe(csv.transform(rec => {
+            try {
+              rec[0] = rec[0].replace(/-/g, '/')
+            } catch (e) { /* ignore */ }
+            return rec
+          }))
+          .pipe(csv.stringify())
+        out.setEncoding('utf-8')
+        var output = ''
+        out.on('data', chunk => output += chunk)
+        return new Promise(resolve => {
+          out.on('end', () => {
+            expect(output).to.equal('日期,人數\n2018/11/13,123\n2018/11/14,45671\n2018/11/15,991\n2018/11/16,3025\n2018/11/17,104234\n')
+            resolve()
+          })
+        })
+      })
     })
   })
 })
