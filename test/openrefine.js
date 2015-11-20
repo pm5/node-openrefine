@@ -123,6 +123,15 @@ describe('OpenRefine', () => {
       )
     })
 
+    describe('export data', () => {
+      it('should export data as text', () =>
+        OpenRefine()
+          .create(test_project_name)
+          .upload('test/test.csv')
+          .export()
+          .then(text => expect(text).to.equal('日期,人數\n2018-11-13,123\n2018-11-14,45671\n2018-11-15,991\n2018-11-16,3025\n2018-11-17,104234\n')))
+    })
+
     describe('pipe data', () => {
       it('should pipe data to stream', () => {
         var out = OpenRefine()
