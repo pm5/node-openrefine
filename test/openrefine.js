@@ -2,6 +2,7 @@
 
 var expect = require('chai').expect
 var OpenRefine = require('../').OpenRefine
+var fs = require('fs')
 
 describe('OpenRefine', () => {
   var test_project_name = 'my_awesome_data_cleanup_project_dont_use_this_name_for_your_projects'
@@ -107,8 +108,8 @@ describe('OpenRefine', () => {
         OpenRefine()
           .create(test_project_name)
           .upload('test/test.csv')
-          .apply('test/op.json')
           .download('csv', 'output.csv')
+          .then(() => expect(fs.readFileSync('output.csv').toString('utf-8')).to.equal('日期,人數\n2018-11-13,123\n2018-11-14,45671\n2018-11-15,991\n2018-11-16,3025\n2018-11-17,104234\n'))
       )
     })
 
@@ -127,7 +128,6 @@ describe('OpenRefine', () => {
           .create(test_project_name)
           .upload('test/test.csv')
           .apply('test/op.json')
-          .pipe(
         }
       )
     })
