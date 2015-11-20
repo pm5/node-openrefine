@@ -27,11 +27,8 @@ describe('OpenRefine', () => {
 
     describe('create projects', () => {
       it('should create projects by name', () => {
-        OpenRefine()
-          .create(test_project_name)
-          .then(r => {
-            expect(r.project_id).to.be.defined
-          })
+        var p = OpenRefine().create(test_project_name)
+        return expect(p.id()).to.be.undefined
       })
     })
 
@@ -121,6 +118,17 @@ describe('OpenRefine', () => {
           .create(test_project_name)
           .upload('test/test.csv')
           .destroy()
+      )
+    })
+
+    describe('export data to stream', () => {
+      it('should export data', () => {
+        OpenRefine()
+          .create(test_project_name)
+          .upload('test/test.csv')
+          .apply('test/op.json')
+          .pipe(
+        }
       )
     })
   })
