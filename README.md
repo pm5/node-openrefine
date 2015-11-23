@@ -31,11 +31,29 @@ server.project('my_awesome_data_cleanup_project')
   .download('csv', 'output.csv')
   .destroy()
   .then(...)
+```
 
-// load existing project by numeric project id
+You can load existing project by the numeric project id:
+
+```
 server.load(1234567890)
   .download('csv', 'output.csv')
   .then(...)
+```
+
+Pipe resulting data to Node.js streams:
+
+```
+server.load(1234567890)
+  .pipe(csv.parse())
+  .pipe(csv.transform(rec => {
+    try {
+      rec[0] = rec[0].replace(/-/g, '/')
+    } catch (e) { /* ignore */ }
+    return rec
+  }))
+  .pipe(csv.stringify())
+  .pipe(process.stdout)
 ```
 
 Project metadata format :
