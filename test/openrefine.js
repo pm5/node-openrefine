@@ -132,9 +132,20 @@ describe('OpenRefine', () => {
           .then(text => expect(text).to.equal('日期,人數\n2018-11-13,123\n2018-11-14,45671\n2018-11-15,991\n2018-11-16,3025\n2018-11-17,104234\n')))
     })
 
-    describe('pipe data', () => {
-      it('should pipe data to stream', () => {
-        var out = OpenRefine()
+    describe('pipe data in', () => {
+      it('should pipe data into stream', () => {
+        var sin = OpenRefine()
+          .create(test_project_name)
+        fs.createReadStream('test/test.csv')
+          .pipe(sin)
+          .export()
+          .then(text => expect(text).to.equal('日期,人數\n2018-11-13,123\n2018-11-14,45671\n2018-11-15,991\n2018-11-16,3025\n2018-11-17,104234\n'))
+      })
+    })
+
+    describe('pipe data out', () => {
+      it('should pipe data out of stream', () => {
+        var sout = OpenRefine()
           .create(test_project_name)
           .upload('test/test.csv')
           .pipe(csv.parse())
@@ -145,11 +156,11 @@ describe('OpenRefine', () => {
             return rec
           }))
           .pipe(csv.stringify())
-        out.setEncoding('utf-8')
+        sout.setEncoding('utf-8')
         var output = ''
-        out.on('data', chunk => output += chunk)
+        sout.on('data', chunk => output += chunk)
         return new Promise(resolve => {
-          out.on('end', () => {
+          sout.on('end', () => {
             expect(output).to.equal('日期,人數\n2018/11/13,123\n2018/11/14,45671\n2018/11/15,991\n2018/11/16,3025\n2018/11/17,104234\n')
             resolve()
           })
