@@ -1,64 +1,33 @@
 
-node-openrefine
-===============
+
+# node-openrefine
 
 Node.js client library for controlling OpenRefine.
 
-Features
---------
+## Features
 
 * [x] upload, apply operations, download results, delete project
 * [ ] import from and export to buffer
 * [ ] pipe
 * [ ] CLI tool
 
-Usage
------
+## Usage
 
-```
-var OpenRefine = require('openrefine').OpenRefine
+``` javascript
+var openrefine = require('openrefine')
 
-var server = OpenRefine()
-// set API endpoint
-//var server = OpenRefine('http://localhost:3333')
+// another server; same usage
+var server = openrefine.server('http://localhost:3333')
 
-server.projects_metadata()
+// projects metadata
+openrefine
+  .projects()
   .then(data => ...)
-
-server.project('my_awesome_data_cleanup_project')
-  .upload('upload.csv')
-  .apply('operations.json')
-  .download('csv', 'output.csv')
-  .destroy()
-  .then(...)
 ```
 
-You can load existing project by the numeric project id:
+Project metadata format:
 
-```
-server.load(1234567890)
-  .download('csv', 'output.csv')
-  .then(...)
-```
-
-Pipe resulting data to Node.js streams:
-
-```
-server.load(1234567890)
-  .pipe(csv.parse())
-  .pipe(csv.transform(rec => {
-    try {
-      rec[0] = rec[0].replace(/-/g, '/')
-    } catch (e) { /* ignore */ }
-    return rec
-  }))
-  .pipe(csv.stringify())
-  .pipe(process.stdout)
-```
-
-Project metadata format :
-
-```
+``` javascript
 {
   "projects": {
     "[project_id]": {
@@ -72,7 +41,73 @@ Project metadata format :
 }
 ```
 
-See also
---------
+Create a project and clean up some data:
+
+``` javascript
+var project = openrefine
+  .create('data_cleanup_project')     // .create() auto-generates a project name
+  .encoding('utf-8')
+  .accept('csv')
+  .accept({
+    separator: ',',
+    ignoreLines: 1
+  })
+  .expose('csv')
+  .keep(true)   // keep data after end() or pipe; default is not keeping
+  .use([
+    {
+      "op": "core/column-split",
+      "description": "Split column DATE by separator",
+      "engineConfig": {
+        "facets": [],
+        "mode": "row-based"
+      },
+      "columnName": "DATE",
+      "guessCellType": true,
+      "removeOriginalColumn": true,
+      "mode": "separator",
+      "separator": "-",
+      "regex": false,
+      "maxColumns": 0
+    }
+  ])
+  .use(customCleanupAddress())    // customCleanupAddress() returns an array of operations
+
+project
+  .load('input.csv')
+  .end(function (data) {
+    // ...
+  })
+```
+
+Or use the stream interface:
+
+``` javascript
+fs.createStream('input.csv')
+  .pipe(project)
+  .pipe(fs.createWriteStream('output.csv'))
+```
+
+A project may have some states (project metadata such as name and ID, data imported previously, etc.)  To open an existing project, use numeric ID of OpenRefine:
+
+``` javascript
+server.open(1234567980)
+```
+
+Delete all data in a project:
+
+``` javascript
+project.clean()
+```
+
+Destroy a project after use:
+
+``` javascript
+project.destroy()
+```
+
+
+
+## See also
 
 * [Refine API](https://github.com/maxogden/refine-python/wiki/Refine-API) and implementations [in Python](https://github.com/maxogden/refine-python/) and [in Ruby](https://github.com/maxogden/refine-ruby).
