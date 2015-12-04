@@ -88,7 +88,7 @@ fs.createStream('input.csv')
   .pipe(fs.createWriteStream('output.csv'))
 ```
 
-A project may have some states (project metadata such as name and ID, data imported previously, etc.)  To open an existing project, use numeric ID of OpenRefine:
+A project may have some internal states (project metadata such as name and ID, data imported previously, etc.)  To open an existing project, use numeric ID of OpenRefine:
 
 ``` javascript
 server.open(1234567980)
