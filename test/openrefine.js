@@ -12,7 +12,7 @@ describe('OpenRefine', () => {
   var test_project_name = 'dont_use_this_name'
   //var test_project_name = 'abc'
 
-  describe('Server', () => {
+  describe('server', () => {
     describe('get projects metadata', () => {
       var projects_data
       before(() =>
@@ -80,7 +80,7 @@ describe('OpenRefine', () => {
     })
   })
 
-  describe('Project', () => {
+  describe('project', () => {
     after(() =>
       OpenRefine()
         .projects()
@@ -103,6 +103,21 @@ describe('OpenRefine', () => {
     })
 
     describe('data format', () => {
+
+      describe('in objects', () => {
+        var data
+        before(() =>
+          OpenRefine()
+            .create(test_project_name)
+            .load('test/test.csv')
+            .end()
+            .then(d => data = d)
+          )
+        it('should expose data in array of objects', () =>
+          expect(data.length).to.equal(5)
+        )
+      })
+
       describe('in CSV', () => {
         it('should expose data in CSV', () =>
           expect(
