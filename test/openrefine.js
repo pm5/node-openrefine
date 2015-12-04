@@ -134,7 +134,7 @@ describe('OpenRefine', () => {
               .create(test_project_name)
               .expose('tsv')
               .load('test/test.csv')
-              .end(data => data)
+              .end()
             ).to.eventually.match(/^日期\t人數\n/)
         )
       })
