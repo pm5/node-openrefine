@@ -48,14 +48,12 @@ describe('OpenRefine', () => {
       before(() =>
         OpenRefine()
           .create(test_project_name)
-          .upload('test/test.csv')
-          .then(r => id = r.project_id)
+          .load('test/test.csv')
       )
 
       it('should load projects by id', () =>
         OpenRefine()
           .load(id)
-          .apply('test/op.json')
       )
     })
 
@@ -64,8 +62,7 @@ describe('OpenRefine', () => {
       before(() =>
         OpenRefine()
           .create(test_project_name)
-          .upload('test/test.csv')
-          .then(r => id = r.project_id)
+          .load('test/test.csv')
       )
       after(() => OpenRefine().delete(id))
 
