@@ -1,13 +1,11 @@
 
-
 # node-openrefine
 
 Node.js client library for controlling OpenRefine.
 
-## Features
+## TODO / Features
 
-* [x] upload, apply operations, download results, delete project
-* [ ] import from and export to buffer
+* [] upload, apply operations, download results, delete project
 * [ ] pipe
 * [ ] CLI tool
 
@@ -22,7 +20,7 @@ var server = openrefine.server('http://localhost:3333')
 // projects metadata
 openrefine
   .projects()
-  .then(data => ...)
+  .then(project_metadata => ...)
 ```
 
 Project metadata format:
@@ -44,7 +42,6 @@ Create a project and clean up some data:
 ``` javascript
 var project = openrefine
   .create('data_cleanup_project')     // .create() auto-generates a project name
-  .encoding('utf-8')
   .accept('csv')
   .accept({
     separator: ',',
@@ -76,6 +73,7 @@ project
   .end(function (data) {
     // ...
   })
+  .then(() => project.destroy())
 ```
 
 Or use the stream interface:
