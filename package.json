@@ -4,7 +4,8 @@
   "description": "OpenRefine client in Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "debug": "DEBUG=openrefine mocha --reporter spec"
   },
   "repository": {
     "type": "git",

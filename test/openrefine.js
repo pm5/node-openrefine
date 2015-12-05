@@ -82,7 +82,7 @@ describe('OpenRefine', () => {
   })
 
   describe('project', () => {
-    after(() =>
+    after((done) =>
       OpenRefine()
         .projects()
         .then(projects =>
@@ -90,6 +90,7 @@ describe('OpenRefine', () => {
             .filter(id => projects[id].name === test_project_name)
         )
         .then(ids => ids.forEach(OpenRefine().delete))
+        .then(done, done)
     )
 
     describe('load data', () => {
