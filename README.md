@@ -29,15 +29,13 @@ Project metadata format:
 
 ``` javascript
 {
-  "projects": {
-    "[project_id]": {
-      "name": "[project_name]",
-      "created": "[project_creation_time]",
-      "modified": "[project_modification_time]",
-      "customMetadata": {}
-    },
-    ...[More projects]...
-  }
+  "[project_id]": {
+    "name": "[project_name]",
+    "created": "[project_creation_time]",
+    "modified": "[project_modification_time]",
+    "customMetadata": {}
+  },
+  ...[More projects]...
 }
 ```
 

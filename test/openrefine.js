@@ -23,10 +23,10 @@ describe('OpenRefine', () => {
 
       it('should have correct format', () => {
         expect(projects_data.projects).to.be.defined
-        Object.keys(projects_data.projects).forEach(id => {
-          expect(projects_data.projects[id].name).to.be.defined
-          expect(projects_data.projects[id].created).to.be.defined
-          expect(projects_data.projects[id].modified).to.be.defined
+        Object.keys(projects_data).forEach(id => {
+          expect(projects_data[id].name).to.be.defined
+          expect(projects_data[id].created).to.be.defined
+          expect(projects_data[id].modified).to.be.defined
         })
       })
     })
@@ -45,15 +45,19 @@ describe('OpenRefine', () => {
 
     describe('load projects', () => {
       var id
-      before(() =>
-        OpenRefine()
+      before(() => {
+        var project = OpenRefine()
           .create(test_project_name)
+        project
           .load('test/test.csv')
-      )
+          .end()
+          .then(() => id = project.id())
+        return project
+      })
 
-      it('should load projects by id', () =>
+      it('should open projects by id', () =>
         OpenRefine()
-          .load(id)
+          .open(id)
       )
     })
 
@@ -78,15 +82,15 @@ describe('OpenRefine', () => {
   })
 
   describe('project', () => {
-    //after(() =>
-      //OpenRefine()
-        //.projects()
-        //.then(data =>
-          //Object.keys(data.projects)
-            //.filter(id => data.projects[id].name === test_project_name)
-        //)
-        //.then(ids => ids.forEach(OpenRefine().delete))
-    //)
+    after(() =>
+      OpenRefine()
+        .projects()
+        .then(projects =>
+          Object.keys(projects)
+            .filter(id => projects[id].name === test_project_name)
+        )
+        .then(ids => ids.forEach(OpenRefine().delete))
+    )
 
     describe('load data', () => {
       it('should load the data and output at end', () =>
@@ -161,8 +165,27 @@ describe('OpenRefine', () => {
       )
     })
 
-    //describe('destroy project', () => {
-    //})
+    describe('destroy project', () => {
+      var project
+      before(done => {
+        project = OpenRefine()
+          .create(test_project_name)
+        project
+          .load('test/test.csv')
+          .end()
+          .then(() => done())
+      })
+      before(done => {
+        project.destroy()
+          .then(() => done())
+      })
+
+      it('should delete the project', () => {
+        return expect(OpenRefine()
+          .projects()
+          ).to.eventually.not.include.keys(project.id())
+      })
+    })
 
   })
 })
