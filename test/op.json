@@ -1,12 +1,12 @@
 [
   {
     "op": "core/column-split",
-    "description": "Split column 日期 by separator",
+    "description": "Split column Date by separator",
     "engineConfig": {
       "facets": [],
       "mode": "row-based"
     },
-    "columnName": "日期",
+    "columnName": "Date",
     "guessCellType": true,
     "removeOriginalColumn": true,
     "mode": "separator",

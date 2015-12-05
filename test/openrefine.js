@@ -78,15 +78,15 @@ describe('OpenRefine', () => {
   })
 
   describe('project', () => {
-    after(() =>
-      OpenRefine()
-        .projects()
-        .then(data =>
-          Object.keys(data.projects)
-            .filter(id => data.projects[id].name === test_project_name)
-        )
-        .then(ids => ids.forEach(OpenRefine().delete))
-    )
+    //after(() =>
+      //OpenRefine()
+        //.projects()
+        //.then(data =>
+          //Object.keys(data.projects)
+            //.filter(id => data.projects[id].name === test_project_name)
+        //)
+        //.then(ids => ids.forEach(OpenRefine().delete))
+    //)
 
     describe('load data', () => {
       it('should load the data and output at end', () =>
@@ -145,55 +145,24 @@ describe('OpenRefine', () => {
 
     describe('apply operations', () => {
       it('should apply operations to project', () =>
-        //expect(
-          //OpenRefine()
-            //.create(test_project_name)
-            //.use(JSON.parse(fs.readFileSync('test/op.json')))
-            //.load('test/test.csv')
-            //.end()
-          //).to.eventually.eql([
-          //])
-        true
+        expect(
+          OpenRefine()
+            .create(test_project_name)
+            .use(JSON.parse(fs.readFileSync('test/op.json')))
+            .load('test/test.csv')
+            .end()
+          ).to.eventually.eql([
+              {'Date 1': '2018', 'Date 2': '11', 'Date 3': '13', Number: '123'},
+              {'Date 1': '2018', 'Date 2': '11', 'Date 3': '14', Number: '45671'},
+              {'Date 1': '2018', 'Date 2': '11', 'Date 3': '15', Number: '991'},
+              {'Date 1': '2018', 'Date 2': '11', 'Date 3': '16', Number: '3025'},
+              {'Date 1': '2018', 'Date 2': '11', 'Date 3': '17', Number: '104234'},
+          ])
       )
     })
 
-    describe('destroy project', () => {
-    })
-
-    //describe('pipe data in', () => {
-      //it('should pipe data into stream', () => {
-        //var sin = OpenRefine()
-          //.create(test_project_name)
-        //fs.createReadStream('test/test.csv')
-          //.pipe(sin)
-          //.export()
-          //.then(text => expect(text).to.equal('日期,人數\n2018-11-13,123\n2018-11-14,45671\n2018-11-15,991\n2018-11-16,3025\n2018-11-17,104234\n'))
-      //})
+    //describe('destroy project', () => {
     //})
 
-    //describe('pipe data out', () => {
-      //it('should pipe data out of stream', () => {
-        //var sout = OpenRefine()
-          //.create(test_project_name)
-          //.upload('test/test.csv')
-          //.pipe(csv.parse())
-          //.pipe(csv.transform(rec => {
-            //try {
-              //rec[0] = rec[0].replace(/-/g, '/')
-            //} catch (e) { [> ignore <] }
-            //return rec
-          //}))
-          //.pipe(csv.stringify())
-        //sout.setEncoding('utf-8')
-        //var output = ''
-        //sout.on('data', chunk => output += chunk)
-        //return new Promise(resolve => {
-          //sout.on('end', () => {
-            //expect(output).to.equal('日期,人數\n2018/11/13,123\n2018/11/14,45671\n2018/11/15,991\n2018/11/16,3025\n2018/11/17,104234\n')
-            //resolve()
-          //})
-        //})
-      //})
-    //})
   })
 })
