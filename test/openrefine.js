@@ -102,16 +102,19 @@ describe('OpenRefine', () => {
     describe('data format', () => {
 
       describe('in objects', () => {
-        var data
-        before(() =>
-          OpenRefine()
-            .create(test_project_name)
-            .load('test/test.csv')
-            .end()
-            .then(d => data = d)
-          )
         it('should expose data in array of objects', () =>
-          expect(data.length).to.equal(5)
+          expect(
+            OpenRefine()
+              .create(test_project_name)
+              .load('test/test.csv')
+              .end()
+            ).to.eventually.eql([
+              {Date: '2018-11-13', Number: '123'},
+              {Date: '2018-11-14', Number: '45671'},
+              {Date: '2018-11-15', Number: '991'},
+              {Date: '2018-11-16', Number: '3025'},
+              {Date: '2018-11-17', Number: '104234'},
+            ])
         )
       })
 
@@ -123,7 +126,7 @@ describe('OpenRefine', () => {
               .expose('csv')
               .load('test/test.csv')
               .end(data => data)
-            ).to.eventually.match(/^日期,人數\n/)
+            ).to.eventually.match(/^Date,Number\n/)
         )
       })
 
@@ -135,14 +138,22 @@ describe('OpenRefine', () => {
               .expose('tsv')
               .load('test/test.csv')
               .end()
-            ).to.eventually.match(/^日期\t人數\n/)
+            ).to.eventually.match(/^Date\tNumber\n/)
         )
       })
     })
 
     describe('apply operations', () => {
       it('should apply operations to project', () =>
-          true
+        //expect(
+          //OpenRefine()
+            //.create(test_project_name)
+            //.use(JSON.parse(fs.readFileSync('test/op.json')))
+            //.load('test/test.csv')
+            //.end()
+          //).to.eventually.eql([
+          //])
+        true
       )
     })
 
