@@ -2,12 +2,36 @@
 # node-openrefine
 
 Node.js client library for controlling OpenRefine.
+Currently is nothing but a fork.
 
-## TODO / Features
+Although there are many other ways to achieve these results using other applications I have yet to experience an application that can handle such a huge amount of data and transform it with insane speeds.
 
-* [] upload, apply operations, download results, delete project
-* [ ] pipe
-* [ ] CLI tool
+The main objective is to apply the necessary changes to OpenRefine to make it work as an API service. Where the transformations can occur at the original object level, without the need to start and define "Projects" imports and exports.
+
+Simply put, think of it as every project is initiated as a Line-Based text file and all else happens as part of the transformations/operations. A set of operations is tied to a REST service where payload is sent and transformed data is received.
+This would mean that you can send messy CSVs and receive back cleaned versions using the same operations.
+Or post xPaths of HTML data directly from the console of your browser and retrieve structured data.
+
+--My Project
+
+Milestone 1
+- Get projects to actively listen as a REST service to post requests.
+> Send new row(s) to the buffer, validate cloumn/data structure matching
+> Apply preset transformations and post reply back.
+> Fully clear cache and buffer and return to the original listening state.
+Potential integration with https://medialab.github.io/artoo/
+
+Milestone 2
+- Build conditional operations dependent on validations
+> Start with CSV file > Apply transformation set to get column names > Post column names for comparison
+> If column names match X pattern then apply transformation set Y
+(think of a company who has to build so many reports everyday, your best bet would be to assign transformations based on filename imported, however transformations based on conditional specifications allow for a much faulty free and universal resource processing)
+
+Milestone 3
+- Extend useability of the UI experience of other additional features of the system
+> Explore the possibility of using Facet's data results in other interfaces
+> Could clusters or facets be used in ORM based systems?
+> Would a full integration of Facets be possible for ng-grid or KendoUI, Infragistics or DHTMLX?
 
 ## Usage
 
