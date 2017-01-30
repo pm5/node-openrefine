@@ -1,7 +1,7 @@
 {
-  "name": "openrefine",
+  "name": "node-openrefine",
   "version": "0.0.3",
-  "description": "OpenRefine client in Node.js",
+  "description": "Just a form for md5 one with last version of node",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
