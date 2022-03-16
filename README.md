@@ -12,13 +12,14 @@ Node.js client library for controlling OpenRefine.
 ## Usage
 
 ``` javascript
-var openrefine = require('openrefine')
+const openrefine = require('openrefine')
 
 // another server; same usage
-var server = openrefine.server('http://localhost:3333')
+const server = openrefine.server('http://localhost:3333')
+const csrfToken = await server.getCsrfToken();
 
 // projects metadata
-openrefine
+server
   .projects()
   .then(project_metadata => ...)
 ```
@@ -40,8 +41,9 @@ Project metadata format:
 Create a project and clean up some data:
 
 ``` javascript
-var project = openrefine
-  .create('data_cleanup_project')     // .create() auto-generates a project name
+const project = server.create('data_cleanup_project'); // .create() auto-generates a project name
+
+project   
   .accept('csv')
   .accept({
     separator: ',',
@@ -65,14 +67,14 @@ var project = openrefine
       "regex": false,
       "maxColumns": 0
     }
-  ])
-  .use(customCleanupAddress())    // customCleanupAddress() returns an array of operations
+  ], csrfToken)
+  .use(customCleanupAddress(), csrfToken)    // customCleanupAddress() returns an array of operations
 
 project
-  .load('input.csv')
+  .load('input.csv', csrfToken)
   .end(function (data) {
     // ...
-  })
+  }, csrfToken)
   .then(() => project.destroy())
 ```
 
@@ -99,7 +101,7 @@ project.clean()
 Destroy a project after use:
 
 ``` javascript
-project.destroy()
+project.destroy(csrfToken)
 ```
 
 

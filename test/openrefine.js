@@ -94,25 +94,27 @@ describe('OpenRefine', () => {
     )
 
     describe('load data', () => {
-      it('should load the data and output at end', () =>
+      it('should load the data and output at end', async () => {
+        var token = await OpenRefine().getCsrfToken();
         expect(
           OpenRefine()
             .create(test_project_name)
-            .load('test/test.csv')
+            .load('test/test.csv', token)
             .end()
           ).to.eventually.be.ok
-      )
+        })
     })
 
     describe('data format', () => {
 
       describe('in objects', () => {
-        it('should expose data in array of objects', () =>
+        it('should expose data in array of objects', async () => {
+          var token = await OpenRefine().getCsrfToken();
           expect(
             OpenRefine()
               .create(test_project_name)
-              .load('test/test.csv')
-              .end()
+              .load('test/test.csv', token)
+              .end(token)
             ).to.eventually.eql([
               {Date: '2018-11-13', Number: '123'},
               {Date: '2018-11-14', Number: '45671'},
@@ -120,41 +122,44 @@ describe('OpenRefine', () => {
               {Date: '2018-11-16', Number: '3025'},
               {Date: '2018-11-17', Number: '104234'},
             ])
-        )
+        })
       })
 
       describe('in CSV', () => {
-        it('should expose data in CSV', () =>
+        it('should expose data in CSV', async () => {
+          var token = await OpenRefine().getCsrfToken();
           expect(
             OpenRefine()
               .create(test_project_name)
               .expose('csv')
-              .load('test/test.csv')
-              .end(data => data)
+              .load('test/test.csv', token)
+              .end(data => data, token)
             ).to.eventually.match(/^Date,Number\n/)
-        )
+        })
       })
 
       describe('in TSV', () => {
-        it('should expose data in TSV', () =>
+        it('should expose data in TSV', async () => {
+          var token = await OpenRefine().getCsrfToken();
           expect(
             OpenRefine()
               .create(test_project_name)
               .expose('tsv')
-              .load('test/test.csv')
+              .load('test/test.csv', token)
               .end()
             ).to.eventually.match(/^Date\tNumber\n/)
-        )
+        })
       })
     })
 
     describe('apply operations', () => {
-      it('should apply operations to project', () =>
+      it('should apply operations to project', async () => {
+        var token = await OpenRefine().getCsrfToken();
         expect(
           OpenRefine()
             .create(test_project_name)
             .use(JSON.parse(fs.readFileSync('test/op.json')))
-            .load('test/test.csv')
+            .load('test/test.csv', token)
             .end()
           ).to.eventually.eql([
               {'Date 1': '2018', 'Date 2': '11', 'Date 3': '13', Number: '123'},
@@ -163,21 +168,23 @@ describe('OpenRefine', () => {
               {'Date 1': '2018', 'Date 2': '11', 'Date 3': '16', Number: '3025'},
               {'Date 1': '2018', 'Date 2': '11', 'Date 3': '17', Number: '104234'},
           ])
-      )
+      })
     })
 
-    describe('destroy project', () => {
+    describe('destroy project', async () => {
       var project
+      var token = await OpenRefine().getCsrfToken();
+
       before(done => {
         project = OpenRefine()
           .create(test_project_name)
         project
-          .load('test/test.csv')
+          .load('test/test.csv', token)
           .end()
           .then(() => done())
       })
       before(done => {
-        project.destroy()
+        project.destroy(token)
           .then(() => done())
       })
 
